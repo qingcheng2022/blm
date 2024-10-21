@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 """
-cron: 0 0,10,20 * * *
+cron: 0 3,10,20,23 * * *
 new Env('饿了么乐园币助力');
 """
 
@@ -10,10 +10,10 @@ import requests
 from urllib.parse import quote
 import datetime
 
-host = 'https://acs.m.goofish.com'
+host = 'http://192.168.1.16:999/api/getXSign'
 
 # 获取环境变量 elmzlck
-zlck = os.environ.get('nczlck')
+zlck = os.environ.get('elmck')
 
 # 指定你的目标 USERID（用 & 分隔多个值）
 specified_userids = ["1546740", "1000197151893", "190175219", "1000255253743", "6275920706", "3000012019667", "1000288101583", "1000300296604", "3100017866491"]  # 在此处添加多个121和USERID
@@ -42,7 +42,7 @@ class LYB:
         self.name = self.uid
 
     def xsign(self, api, data, wua, v):
-        url = "http://192.168.1.253:9999/api/getXSign"
+        url = "http://192.168.1.16:999/api/getXSign"
         body = {
             "data": data,
             "api": api,
