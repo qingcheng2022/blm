@@ -14,7 +14,7 @@ proxy_api_url = "http://v2.api.juliangip.com/dynamic/getips?filter=1&ip_remain=1
 
 qgid = "20"
 
-host = 'https://acs.m.goofish.com'
+host = 'http://192.168.1.16:999/api/getXSign'
 
 ck = ''
 
