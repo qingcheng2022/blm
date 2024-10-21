@@ -34,7 +34,7 @@ class LYB:
         self.sid = self.cki.get("cookie2")
         self.token = self.cki.get("token")
         self.deviceId = self.cki.get("deviceId")
-        self.host = 'http://192.168.1.16:999/api/getXSign'
+        self.host = 'https://acs.m.goofish.com'
         self.name1 = self.uid
 
     def xsign(self, api, data, wua, v):
