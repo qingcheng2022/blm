@@ -6,8 +6,8 @@
 
 const $ = new Env('饿了么夺宝');
 const axios = require('axios');
-const elmSignUrl = "http://192.168.1.253:9999/api/getXSign"; // 主签名接口
-const elmSignUrl1 = "http://192.168.1.111:9999/api/getXSign"; // 备用签名接口
+const elmSignUrl = "http://192.168.1.16:999/api/getXSign"; // 主签名接口
+const elmSignUrl1 = "http://192.168.1.16:999/api/getXSign"; // 备用签名接口
 let cookiesArr = [];
 
 // 解析 cookies
