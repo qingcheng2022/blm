@@ -2,7 +2,7 @@
 const axios = require('axios');
 const crypto = require('crypto');
 
-const elmSignUrl = process.env.elmSignUrl ? process.env.elmSignUrl : "http://192.168.1.253:9999/api/getXSign";
+const elmSignUrl = process.env.elmSignUrl ? process.env.elmSignUrl : "http://192.168.1.16:999/api/getXSign";
 
 
 async function getApiElmSign(api, data, uid, sid) {
