@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 """
-cron: 21 6,13,20 * * *
+cron: 21 1,23,6,13,20 * * *
 new Env('饿了么贪吃蛇');
 """
 import os
@@ -15,7 +15,7 @@ import random
 import string
 from concurrent.futures import ThreadPoolExecutor
 
-host = 'https://acs.m.goofish.com'
+host = 'http://192.168.1.16:999/api/getXSign'
 
 ck = ''
 
