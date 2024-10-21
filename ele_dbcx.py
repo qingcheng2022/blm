@@ -11,7 +11,7 @@ import json
 import requests
 from urllib.parse import quote, urlencode
 
-host = 'https://acs.m.goofish.com'
+host = 'http://192.168.1.16:999/api/getXSign'
 
 ck = ''
 
@@ -145,7 +145,7 @@ class LYB:
 
         try:
             r = requests.post(
-                "http://192.168.1.253:9999/api/getXSign",
+                "http://192.168.1.16:999/api/getXSign",
                 json=body
             )
             r.raise_for_status()
