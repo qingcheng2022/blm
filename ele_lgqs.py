@@ -15,7 +15,7 @@ import tempfile
 import subprocess
 from concurrent.futures import ThreadPoolExecutor
 
-host = 'https://acs.m.goofish.com'
+host = 'http://192.168.1.16:999/api/getXSign'
 
 ck = ''
 
@@ -25,7 +25,7 @@ import string
 import base64  
 
 def rsa_encrypt(public_key_pem, data_str):
-    url = 'http://mzkj666.cn:9324/encrypt'
+    url = 'http://192.168.1.16:999/api/getXSign'
     data = {
         'publicKeyPem': public_key_pem,
         'dataStr': data_str
