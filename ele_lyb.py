@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 """
-cron: 15 9,18 * * *
+cron: 15 9,18,23 * * *
 new Env('乐园币');
 """
 import hashlib
@@ -10,7 +10,7 @@ import json
 import requests
 from urllib.parse import quote, urlencode
 
-host = 'https://acs.m.goofish.com'
+host = 'http://192.168.1.16:999/api/getXSign'
 
 ck = ''
 
@@ -141,7 +141,7 @@ class LYB:
 
         try:
             r = requests.post(
-                "http://110.41.17.62:9999/api/getXSign",
+                "http://192.168.1.16:999/api/getXSign",
                 json=body
             )
             r.raise_for_status()
