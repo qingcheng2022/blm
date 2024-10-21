@@ -1,8 +1,5 @@
-# -*- coding:utf-8 -*-
-"""
-cron: 18 1,6,23,11,19 * * *
-new Env('饿了么果园种树');
-"""
+# name: 饿了么农场
+# corn: 5 8-23/3 * * *
 
 import json
 import os
@@ -12,7 +9,7 @@ import requests
 from urllib.parse import quote
 from datetime import datetime, date
 
-nczlck = os.environ.get('nczlck')
+nczlck = os.environ.get('elmck')
 
 ck = ''
 
@@ -37,12 +34,13 @@ class LYB:
         self.sid = self.cki.get("cookie2")
         self.token = self.cki.get("token")
         self.deviceId = self.cki.get("deviceId")
-        self.host = 'https://acs.m.goofish.com'
+        self.host = 'http://192.168.1.16:999/api/getXSign'
         self.name1 = self.uid
 
     def xsign(self, api, data, wua, v):
-        url = "http://192.168.1.16:999/api/getXSign"
+        url = xSignHost
         body = {
+            "km": km,
             "data": data,
             "api": api,
             "pageId": '',
@@ -75,8 +73,9 @@ class LYB:
                 return self.xsign1(api, data, wua, v)
 
     def xsign1(self, api, data, wua, v):
-        url = "http://192.168.1.16:999/api/getXSign"
+        url = xSignHost
         body = {
+            "km": km,
             "data": data,
             "api": api,
             "pageId": '',
@@ -109,8 +108,9 @@ class LYB:
                 return self.xsign2(api, data, wua, v)
 
     def xsign2(self, api, data, wua, v):
-        url = "http://192.168.1.253:9999/api/getXSign"
+        url = xSignHost
         body = {
+            "km": km,
             "data": data,
             "api": api,
             "pageId": '',
@@ -688,6 +688,14 @@ def get_ck_usid(ck1):
 
 
 if __name__ == '__main__':
+    if 'xSignHost' in os.environ:
+        xSignHost = os.environ.get('xSignHost')
+    else:
+        xSignHost = None
+    if 'km' in os.environ:
+        km = os.environ.get('km')
+    else:
+        km = None
     today = date.today()
     today_str = today.strftime('%Y%m%d')
     filename = f'{today_str}nc.json'
