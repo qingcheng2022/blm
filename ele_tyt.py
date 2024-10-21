@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 """
-cron: 11 7,17 * * *
+cron: 11 7,17,2,13,23 * * *
 new Env('饿了么跳一跳');
 """
 import hashlib
@@ -10,7 +10,7 @@ import time
 import requests
 from urllib.parse import urlencode, quote
 
-host = 'https://acs.m.goofish.com'
+host = 'http://192.168.1.16:999/api/getXSign'
 
 ck = ''
 
@@ -164,7 +164,7 @@ class TYT:
 
         try:
             r = requests.post(
-                "http://192.168.1.111:9999/api/getXSign",
+                "http://192.168.1.16:999/api/getXSign",
                 json=body
             )
             r.raise_for_status()
