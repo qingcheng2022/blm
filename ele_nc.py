@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 """
-cron: 18 1,11,19 * * *
+cron: 18 1,6,23,11,19 * * *
 new Env('饿了么果园种树');
 """
 
@@ -41,7 +41,7 @@ class LYB:
         self.name1 = self.uid
 
     def xsign(self, api, data, wua, v):
-        url = "http://192.168.1.253:9999/api/getXSign"
+        url = "http://192.168.1.16:999/api/getXSign"
         body = {
             "data": data,
             "api": api,
@@ -75,7 +75,7 @@ class LYB:
                 return self.xsign1(api, data, wua, v)
 
     def xsign1(self, api, data, wua, v):
-        url = "http://192.168.1.111:9999/api/getXSign"
+        url = "http://192.168.1.16:999/api/getXSign"
         body = {
             "data": data,
             "api": api,
