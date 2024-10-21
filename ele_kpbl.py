@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 """
-cron: 11 8,14,20 * * *
+cron: 11 1,8,14,20,23 * * *
 new Env('饿了么卡皮巴拉小餐车');
 """
 import json
@@ -15,7 +15,7 @@ from urllib.parse import quote
 from concurrent.futures import ThreadPoolExecutor
 from requests import RequestException
 
-host = 'https://acs.m.goofish.com'
+host = 'http://192.168.1.16:999/api/getXSign'
 
 ck = ''
 
@@ -70,7 +70,7 @@ def xsign(api, data, uid, sid, wua, v):
 
     try:
         r = requests.post(
-            "http://192.168.1.253:9999/api/getXSign",
+            "http://192.168.1.16:999/api/getXSign",
             json=body
         )
         r.raise_for_status()
