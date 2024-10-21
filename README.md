@@ -1,1 +1,4 @@
-ql repo https://github.com/pfvlz/pfvlzel.git "^ele" "" "common|ql|sendNotify|ql1|sendNotify1|sendNotify1|rsa_encrypt|notify|"
+拉库：
+ql repo https://github.com/qingcheng2022/blm.git
+代理拉库：
+ql repo https://gh.301.ee/https://github.com/qingcheng2022/blm.git
