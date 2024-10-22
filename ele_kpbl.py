@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 """
-cron: cron: 11 1,8,14,20,23 * * *
+cron: 11 8,14,20 * * *
 new Env('饿了么卡皮巴拉小餐车');
 """
 import json
@@ -15,7 +15,7 @@ from urllib.parse import quote
 from concurrent.futures import ThreadPoolExecutor
 from requests import RequestException
 
-host = 'http://192.168.1.16:999/api/getXSign'
+host = 'https://acs.m.goofish.com'
 
 ck = ''
 
