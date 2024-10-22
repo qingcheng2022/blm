@@ -4,7 +4,7 @@
  * cron: 50 7,17,2,12,23 * * *
  */
 
-const $ = new Env('饿了么-我要当总裁');
+const $ = new Env('饱了么当总裁');
 const {
   cookiesToMap,
   elmRequestByApi,
