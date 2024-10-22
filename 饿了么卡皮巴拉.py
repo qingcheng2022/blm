@@ -1,5 +1,4 @@
 # 饿了么卡皮巴拉 需要接口才能运行
-cron: 11 1,8,14,20,23 * * *
 import json
 import logging
 import os
@@ -14,7 +13,11 @@ from requests import RequestException
 host = 'http://192.168.1.16:999/api/getXSign'
 
 ck = ''
-new Env('饿了么卡皮巴拉小餐车');
+
+"""
+cron: 41 7,4,12,23,17 * * *
+new Env('饿了么卡皮巴拉');
+"""
 
 import json
 import random
