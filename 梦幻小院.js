@@ -1,6 +1,6 @@
 /**
  * 变量：elmck: 必填，账号cookie
- * cron 1 1-23/2 * * *
+ * cron 1 1-23/3 * * *
  * 需要手动玩到四级才能跑
  */
 // 简单定义一个 Env 对象
@@ -12,7 +12,7 @@ class Env {
         console.log(...args);
     }
 }
-const $ = new Env('饿了么梦幻小院');
+const $ = new Env('饱了么梦幻小院');
 const {
     "getToken": getToken,
     "tryCatchPromise": tryCatchPromise,
