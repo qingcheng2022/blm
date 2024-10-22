@@ -1,11 +1,3 @@
-"""
-cron: 0 3,10,20,23 * * *
-new Env('乐园币助力');
-"""
-
-
-# 获取环境变量 elmzlck
-ownerId = os.environ.get('elmck')
 
 
 /** 饿了么助力 环境变量为 ownerId ,和elmck一样 */
