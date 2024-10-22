@@ -3,6 +3,12 @@
 cron: 21 1,23,6,13,20 * * *
 new Env('饿了么贪吃蛇');
 """
+
+# -*- coding:utf-8 -*-
+"""
+cron: 1 1,23,6,13,20 * * *
+new Env('饱了么贪吃蛇');
+"""
 import os
 import re
 import time
@@ -15,7 +21,7 @@ import random
 import string
 from concurrent.futures import ThreadPoolExecutor
 
-host = 'http://192.168.1.16:999/api/getXSign'
+host = 'https://acs.m.goofish.com'
 
 ck = ''
 
@@ -183,7 +189,7 @@ class TCS:
 
         try:
             r = requests.post(
-                "http://127.0.0.1:18848/api/getXSign",
+                "http://192.168.1.16:999/api/getXSign",
                 json=body
             )
             r.raise_for_status()
