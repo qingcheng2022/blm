@@ -1,9 +1,6 @@
+# 饿了么蓝光骑士 需要接口
 # -*- coding: utf-8 -*-
-# -*- coding:utf-8 -*-
-"""
-cron: 55 0,9,15,18,23 * * *
-new Env('饿了么光轮蓝骑士');
-"""
+
 import hashlib
 import os
 import re
@@ -13,8 +10,10 @@ from urllib.parse import urlencode, quote
 import execjs
 import tempfile
 import subprocess
-from concurrent.futures import ThreadPoolExecutor
-
+"""
+cron: 55 0,9,15,18,23 * * *
+new Env('饿了么光轮蓝骑士');
+"""
 host = 'http://192.168.1.16:999/api/getXSign'
 
 ck = ''
@@ -25,7 +24,7 @@ import string
 import base64  
 
 def rsa_encrypt(public_key_pem, data_str):
-    url = 'http://192.168.1.16:999/api/getXSign'
+    url = 'http://mzkj666.cn:9324/encrypt'
     data = {
         'publicKeyPem': public_key_pem,
         'dataStr': data_str
@@ -44,13 +43,11 @@ def generate_random_string(length=50):
 def get_ck_usid(ck1):
     key_value_pairs = ck1.split(";")
     for pair in key_value_pairs:
-        pair = pair.strip()  # 去掉空格
-        if "=" in pair:  # 检查是否有等号
-            key, value = pair.split("=", 1)  # 只分割成两部分
-            if key == "USERID":
-                return value
-    return '账号'
-
+        key, value = pair.split("=")
+        if key == "USERID":
+            return value
+        else:
+            return '账号'
 
 def hbh5tk(tk_cookie, enc_cookie, cookie_str):
     """
@@ -170,7 +167,7 @@ class TYT:
 
         try:
             r = requests.post(
-                "http://192.168.1.253:9999/api/getXSign",
+                "http://192.168.1.16:999/api/getXSign",
                 json=body
             )
             r.raise_for_status()
@@ -485,9 +482,8 @@ if __name__ == '__main__':
         exit(-1)
     cookies = cookie.split("&")
     print(f"饿了么共获取到 {len(cookies)} 个账号")
-    with ThreadPoolExecutor(max_workers=3) as executor:
-        for i, ck in enumerate(cookies):
-            print(f"======开始第{i + 1}个账号======")
-            executor.submit(TYT(ck).main)
-            print("12s后进行下一个账号")
-            time.sleep(12)
+    for i, ck in enumerate(cookies):
+        print(f"======开始第{i + 1}个账号======")
+        TYT(ck).main()
+        print("2s后进行下一个账号")
+        time.sleep(2)
