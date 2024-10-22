@@ -78,7 +78,7 @@ function getRandom(_0xf39232, _0x3b47cc) {
 async function start() {
   const _0x5828a4 = process.env.ELE_FANLI_TIME;
   await validateCarmeWithType(kami, 1);
-  const _0x37acb9 = process.env.ownerId;
+  const _0x37acb9 = process.env.elmck;
 
   if (!_0x37acb9) {
     console.log("请先配置环境变量ownerId！！");
