@@ -10,11 +10,8 @@ from urllib.parse import urlencode, quote
 import execjs
 import tempfile
 import subprocess
-"""
-cron: 55 0,9,15,18,23 * * *
-new Env('饿了么光轮蓝骑士');
-"""
-host = 'http://192.168.1.16:999/api/getXSign'
+
+host = 'https://acs.m.goofish.com'
 
 ck = ''
 
