@@ -13,7 +13,7 @@ import datetime
 host = 'https://acs.m.goofish.com'
 
 # 获取环境变量 elmzlck
-zlck = os.environ.get('elmzlck')
+zlck = os.environ.get('nczlck')
 
 
 # 准备 cookie 的变量
