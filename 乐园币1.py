@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 """
-cron: 15 9 * * *
-new Env('乐园币助里');
+cron: 25 4,9,15,20 * * *
+new Env('乐园币1');
 """
 import hashlib
 import os
