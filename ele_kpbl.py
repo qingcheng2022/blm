@@ -1,5 +1,5 @@
 # 饿了么卡皮巴拉 需要接口才能运行
-
+cron: 11 1,8,14,20,23 * * *
 import json
 import logging
 import os
@@ -11,7 +11,7 @@ from urllib.parse import quote
 
 from requests import RequestException
 
-host = 'https://acs.m.goofish.com'
+host = 'http://192.168.1.16:999/api/getXSign'
 
 ck = ''
 
