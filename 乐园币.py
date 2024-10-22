@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 """
-cron: 15 9,18,23 * * *
+cron: 15 9,18 * * *
 new Env('乐园币');
 """
 import hashlib
@@ -10,7 +10,7 @@ import json
 import requests
 from urllib.parse import quote, urlencode
 
-host = 'http://192.168.1.16:999/api/getXSign'
+host = 'https://acs.m.goofish.com'
 
 ck = ''
 
