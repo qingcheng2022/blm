@@ -1,4 +1,5 @@
 # 饿了么卡皮巴拉 需要接口才能运行
+
 import json
 import logging
 import os
@@ -14,10 +15,6 @@ host = 'http://192.168.1.16:999/api/getXSign'
 
 ck = ''
 
-"""
-cron: 41 7,4,12,23,17 * * *
-new Env('饿了么卡皮巴拉');
-"""
 
 import json
 import random
