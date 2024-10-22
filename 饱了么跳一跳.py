@@ -10,7 +10,7 @@ import time
 import requests
 from urllib.parse import urlencode, quote
 
-host = 'http://192.168.1.16:999/api/getXSign'
+host = 'https://acs.m.goofish.com'
 
 ck = ''
 
