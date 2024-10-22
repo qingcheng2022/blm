@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 """
 cron: 11 7,4,12,23,17 * * *
-new Env('饿了么跳一跳');
+new Env('饱了么跳一跳');
 """
 import hashlib
 import os
