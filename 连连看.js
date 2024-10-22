@@ -4,7 +4,7 @@
  * cron: 0 9 9,2.20,23,15 * * *
 */
 
-const $ = new Env('饿了么连连看');
+const $ = new Env('饱了么连连看');
 const https = require('https');
 https.globalAgent.options.rejectUnauthorized = false;
 const {
