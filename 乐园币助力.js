@@ -1,590 +1,308 @@
+# -*- coding:utf-8 -*-
+"""
+cron: 0 0,10,20 * * *
+new Env('乐园币助力');
+"""
+
+import json
+import os
+import requests
+from urllib.parse import quote
+import datetime
+
+host = 'https://acs.m.goofish.com'
+
+# 获取环境变量 elmzlck
+zlck = os.environ.get('elmzlck')
 
 
-/** 饿了么助力 环境变量为 ownerId ,和elmck一样 */
+# 准备 cookie 的变量
+ck = ''
 
-const {
-  sign,
-  getToken,
-  wait,
-  checkCk,
-  validateCarmeWithType,
-  User_Agent,
-  getCookies,
-  checkCarmeCount,
-  getUserInfo,
-  tryCatchPromise
-} = require("./common.js");
+def tq(txt):
+    try:
+        txt = txt.replace(" ", "")
+        pairs = txt.split(";")[:-1]
+        ck_json = {}
+        for i in pairs:
+            ck_json[i.split("=")[0]] = i.split("=")[1]
+        return ck_json
+    except Exception as e:
+        print(f'❎Cookie解析错误: {e}')
+        return {}
 
-const request = require("request");
+class LYB:
+    def __init__(self, cki):
+        self.ck1 = tq(cki)
+        self.uid = self.ck1.get("unb")
+        self.sid = self.ck1.get("cookie2")
+        self.user_id = self.ck1.get("USERID")  # 保存 USERID
+        self.name = self.uid
 
-const GAME_TYEP = 2;
-let CookieEles = getCookies();
-const kami = process.env.ELE_CARME;
-
-async function fridensHelper(_0x44fa34, _0x3ca75c) {
-  _0x44fa34 = await checkCk(_0x44fa34);
-  const _0x51fd6d = {
-    "content-type": "application/x-www-form-urlencoded;charset=UTF-8",
-    Cookie: _0x44fa34,
-    "User-Agent": User_Agent
-  };
-
-  const _0x9900e7 = new Date().getTime();
-
-  const _0x4ae8f4 = 12574478;
-  const _0x5f17d6 = {
-    sceneCode: "RECOMMEND_SUPPORT",
-    params: "{\"ownerId\":\"" + _0x3ca75c + "\",\"fromOfficialAccount\":false,\"channel\":\"1\",\"referUserId\":\"\",\"restaurantId\":\"\",\"referCode\":\"\",\"referChannelCode\":\"\",\"referChannelType\":\"\",\"fromWeChatApp\":false,\"bizType\":\"1\",\"v\":\"4.3\",\"chInfo\":\"ch_app_chsub_Photo\",\"from\":\"hjb_app_xbb\",\"actId\":\"1\",\"longitude\":\"120.22057268768549\",\"latitude\":\"30.17862595617771\"}"
-  };
-
-  var _0x5ea933 = "data=" + encodeURIComponent(JSON.stringify(_0x5f17d6));
-
-  const _0x3f65ea = getToken(_0x44fa34),
-        _0x59ecd8 = _0x3f65ea.split("_")[0];
-
-  const _0x3e43d = await sign(_0x59ecd8 + "&" + _0x9900e7 + "&" + _0x4ae8f4 + "&" + JSON.stringify(_0x5f17d6), kami);
-
-  const _0x5f2fe9 = {
-    url: "https://mtop.ele.me/h5/mtop.alibaba.o2o.alsc.union.coupon.track/1.0/?jsv=2.6.1&appKey=12574478&&ttid=1601274958480%40eleme_android_10.14.3&t=" + _0x9900e7 + "&sign=" + _0x3e43d + "&api=mtop.alibaba.o2o.alsc.union.coupon.track",
-    method: "POST",
-    headers: _0x51fd6d,
-    body: _0x5ea933
-  };
-  return tryCatchPromise(_0x3646fc => {
-    request(_0x5f2fe9, async (_0x540129, _0x40bcb1, _0x52637b) => {
-      if (!_0x540129 && _0x40bcb1.statusCode == 200) {
-        try {
-          const _0x6c9838 = JSON.parse(_0x52637b);
-
-          _0x3646fc(_0x6c9838);
-        } catch (_0x53998e) {
-          console.log(_0x53998e);
-
-          _0x3646fc(null);
+    def xsign(self, api, data, wua, v):
+        url = "http://192.168.1.16:999/api/getXSign"
+        body = {
+            "data": data,
+            "api": api,
+            "pageId": '',
+            "uid": self.uid,
+            'sid': self.sid,
+            "deviceId": '',
+            "utdid": '',
+            "wua": wua,
+            'ttid': '1551089129819@eleme_android_10.14.3',
+            "v": v
         }
-      } else {
-        _0x3646fc(null);
-      }
-    });
-  });
-}
-
-function getRandom(_0xf39232, _0x3b47cc) {
-  var _0x378d8b = Math.floor(Math.random() * (_0x3b47cc - _0xf39232 + 1) + _0xf39232);
-
-  return _0x378d8b;
-}
-
-async function start() {
-  const _0x5828a4 = process.env.ELE_FANLI_TIME;
-  await validateCarmeWithType(kami, 1);
-  const _0x37acb9 = process.env.elmck;
-
-  if (!_0x37acb9) {
-    console.log("请先配置环境变量ownerId！！");
-    process.exit(0);
-  }
-
-  for (let _0x1208f8 = 0; _0x1208f8 < CookieEles.length; _0x1208f8++) {
-    let _0x164c60 = CookieEles[_0x1208f8];
-    _0x164c60 = await checkCk(_0x164c60, _0x1208f8);
-
-    if (!_0x164c60) {
-      continue;
-    }
-
-    let _0x43401a = await getUserInfo(_0x164c60);
-
-    if (!_0x43401a.encryptMobile) {
-      console.log("第", _0x1208f8 + 1, "账号失效！请重新登录！！！😭");
-      continue;
-    }
-
-    const _0x52ce8f = _0x43401a.localId;
-    await checkCarmeCount(kami, _0x52ce8f, GAME_TYEP);
-    console.log("******开始【饿了么账号", _0x1208f8 + 1, "】", _0x43401a.encryptMobile, "*********");
-    res = await fridensHelper(_0x164c60, _0x37acb9);
-
-    if (res.data.code == 0) {
-      if (res.data.message == "SUCCESS") {
-        amount = res.data.data.couponAmount / 100;
-        couponCondition = res.data.data.couponCondition / 100;
-        console.log("第", _0x1208f8 + 1, "账号,邀请成功", "被邀请人领取的红包为:满" + couponCondition + "减" + amount + "元");
-      }
-    } else {
-      console.log(res.data.message || "邀请失败");
-    }
-
-    if (_0x5828a4 && _0x5828a4.indexOf("-") != -1) {
-      console.log("防止黑号延时" + _0x5828a4 + "秒");
-
-      const _0x2c394a = _0x5828a4.split("-");
-
-      await wait(getRandom(_0x2c394a[0], _0x2c394a[1]));
-    } else {
-      console.log("防止黑号延时10-30秒");
-      await wait(getRandom(10, 30));
-    }
-  }
-
-  process.exit(0);
-}
-
-start();
-
-function Env(t, e) {
-  "undefined" != typeof process && JSON.stringify(process.env).indexOf("GITHUB") > -1 && process.exit(0);
-
-  class s {
-    constructor(t) {
-      this.env = t;
-    }
-
-    send(t, e = "GET") {
-      t = "string" == typeof t ? {
-        url: t
-      } : t;
-      let s = this.get;
-      "POST" === e && (s = this.post);
-      return new Promise((e, i) => {
-        s.call(this, t, (t, s, r) => {
-          t ? i(t) : e(s);
-        });
-      });
-    }
-
-    get(t) {
-      return this.send.call(this.env, t);
-    }
-
-    post(t) {
-      return this.send.call(this.env, t, "POST");
-    }
-
-  }
-
-  return new class {
-    constructor(t, e) {
-      this.name = t;
-      this.http = new s(this);
-      this.data = null;
-      this.dataFile = "box.dat";
-      this.logs = [];
-      this.isMute = !1;
-      this.isNeedRewrite = !1;
-      this.logSeparator = "\n";
-      this.startTime = new Date().getTime();
-      Object.assign(this, e);
-      this.log("", `🔔${this.name}, 开始!`);
-    }
-
-    isNode() {
-      return "undefined" != typeof module && !!module.exports;
-    }
-
-    isQuanX() {
-      return "undefined" != typeof $task;
-    }
-
-    isSurge() {
-      return "undefined" != typeof $httpClient && "undefined" == typeof $loon;
-    }
-
-    isLoon() {
-      return "undefined" != typeof $loon;
-    }
-
-    toObj(t, e = null) {
-      try {
-        return JSON.parse(t);
-      } catch {
-        return e;
-      }
-    }
-
-    toStr(t, e = null) {
-      try {
-        return JSON.stringify(t);
-      } catch {
-        return e;
-      }
-    }
-
-    getjson(t, e) {
-      let s = e;
-      const i = this.getdata(t);
-
-      if (i) {
-        try {
-          s = JSON.parse(this.getdata(t));
-        } catch {}
-      }
-
-      return s;
-    }
-
-    setjson(t, e) {
-      try {
-        return this.setdata(JSON.stringify(t), e);
-      } catch {
-        return !1;
-      }
-    }
-
-    getScript(t) {
-      return new Promise(e => {
-        this.get({
-          url: t
-        }, (t, s, i) => e(i));
-      });
-    }
-
-    runScript(t, e) {
-      return new Promise(s => {
-        let i = this.getdata("@chavy_boxjs_userCfgs.httpapi");
-        i = i ? i.replace(/\n/g, "").trim() : i;
-        let r = this.getdata("@chavy_boxjs_userCfgs.httpapi_timeout");
-        r = r ? 1 * r : 20;
-        r = e && e.timeout ? e.timeout : r;
-        const [o, h] = i.split("@"),
-              n = {
-          url: `http://${h}/v1/scripting/evaluate`,
-          body: {
-            script_text: t,
-            mock_type: "cron",
-            timeout: r
-          },
-          headers: {
-            "X-Key": o,
-            Accept: "*/*"
-          }
-        };
-        this.post(n, (t, e, i) => s(i));
-      }).catch(t => this.logErr(t));
-    }
-
-    loaddata() {
-      if (!this.isNode()) {
-        return {};
-      }
-
-      {
-        this.fs = this.fs ? this.fs : require("fs");
-        this.path = this.path ? this.path : require("path");
-        const t = this.path.resolve(this.dataFile),
-              e = this.path.resolve(process.cwd(), this.dataFile),
-              s = this.fs.existsSync(t),
-              i = !s && this.fs.existsSync(e);
-
-        if (!s && !i) {
-          return {};
-        }
-
-        {
-          const i = s ? t : e;
-
-          try {
-            return JSON.parse(this.fs.readFileSync(i));
-          } catch (t) {
-            return {};
-          }
-        }
-      }
-    }
-
-    writedata() {
-      if (this.isNode()) {
-        this.fs = this.fs ? this.fs : require("fs");
-        this.path = this.path ? this.path : require("path");
-        const t = this.path.resolve(this.dataFile),
-              e = this.path.resolve(process.cwd(), this.dataFile),
-              s = this.fs.existsSync(t),
-              i = !s && this.fs.existsSync(e),
-              r = JSON.stringify(this.data);
-        s ? this.fs.writeFileSync(t, r) : i ? this.fs.writeFileSync(e, r) : this.fs.writeFileSync(t, r);
-      }
-    }
-
-    lodash_get(t, e, s) {
-      const i = e.replace(/\[(\d+)\]/g, ".$1").split(".");
-      let r = t;
-
-      for (const t of i) if (r = Object(r)[t], void 0 === r) {
-        return s;
-      }
-
-      return r;
-    }
-
-    lodash_set(t, e, s) {
-      return Object(t) !== t ? t : (Array.isArray(e) || (e = e.toString().match(/[^.[\]]+/g) || []), e.slice(0, -1).reduce((t, s, i) => Object(t[s]) === t[s] ? t[s] : t[s] = Math.abs(e[i + 1]) >> 0 == +e[i + 1] ? [] : {}, t)[e[e.length - 1]] = s, t);
-    }
-
-    getdata(t) {
-      let e = this.getval(t);
-
-      if (/^@/.test(t)) {
-        const [, s, i] = /^@(.*?)\.(.*?)$/.exec(t),
-              r = s ? this.getval(s) : "";
-
-        if (r) {
-          try {
-            const t = JSON.parse(r);
-            e = t ? this.lodash_get(t, i, "") : e;
-          } catch (t) {
-            e = "";
-          }
-        }
-      }
-
-      return e;
-    }
-
-    setdata(t, e) {
-      let s = !1;
-
-      if (/^@/.test(e)) {
-        const [, i, r] = /^@(.*?)\.(.*?)$/.exec(e),
-              o = this.getval(i),
-              h = i ? "null" === o ? null : o || "{}" : "{}";
-
-        try {
-          const e = JSON.parse(h);
-          this.lodash_set(e, r, t);
-          s = this.setval(JSON.stringify(e), i);
-        } catch (e) {
-          const o = {};
-          this.lodash_set(o, r, t);
-          s = this.setval(JSON.stringify(o), i);
-        }
-      } else {
-        s = this.setval(t, e);
-      }
-
-      return s;
-    }
-
-    getval(t) {
-      return this.isSurge() || this.isLoon() ? $persistentStore.read(t) : this.isQuanX() ? $prefs.valueForKey(t) : this.isNode() ? (this.data = this.loaddata(), this.data[t]) : this.data && this.data[t] || null;
-    }
-
-    setval(t, e) {
-      return this.isSurge() || this.isLoon() ? $persistentStore.write(t, e) : this.isQuanX() ? $prefs.setValueForKey(t, e) : this.isNode() ? (this.data = this.loaddata(), this.data[e] = t, this.writedata(), !0) : this.data && this.data[e] || null;
-    }
-
-    initGotEnv(t) {
-      this.got = this.got ? this.got : require("got");
-      this.cktough = this.cktough ? this.cktough : require("tough-cookie");
-      this.ckjar = this.ckjar ? this.ckjar : new this.cktough.CookieJar();
-      t && (t.headers = t.headers ? t.headers : {}, void 0 === t.headers.Cookie && void 0 === t.cookieJar && (t.cookieJar = this.ckjar));
-    }
-
-    get(t, e = () => {}) {
-      t.headers && (delete t.headers["Content-Type"], delete t.headers["Content-Length"]);
-      this.isSurge() || this.isLoon() ? (this.isSurge() && this.isNeedRewrite && (t.headers = t.headers || {}, Object.assign(t.headers, {
-        "X-Surge-Skip-Scripting": !1
-      })), $httpClient.get(t, (t, s, i) => {
-        !t && s && (s.body = i, s.statusCode = s.status);
-        e(t, s, i);
-      })) : this.isQuanX() ? (this.isNeedRewrite && (t.opts = t.opts || {}, Object.assign(t.opts, {
-        hints: !1
-      })), $task.fetch(t).then(t => {
-        const {
-          statusCode: s,
-          statusCode: i,
-          headers: r,
-          body: o
-        } = t;
-        e(null, {
-          status: s,
-          statusCode: i,
-          headers: r,
-          body: o
-        }, o);
-      }, t => e(t))) : this.isNode() && (this.initGotEnv(t), this.got(t).on("redirect", (t, e) => {
-        try {
-          if (t.headers["set-cookie"]) {
-            const s = t.headers["set-cookie"].map(this.cktough.Cookie.parse).toString();
-            s && this.ckjar.setCookieSync(s, null);
-            e.cookieJar = this.ckjar;
-          }
-        } catch (t) {
-          this.logErr(t);
-        }
-      }).then(t => {
-        const {
-          statusCode: s,
-          statusCode: i,
-          headers: r,
-          body: o
-        } = t;
-        e(null, {
-          status: s,
-          statusCode: i,
-          headers: r,
-          body: o
-        }, o);
-      }, t => {
-        const {
-          message: s,
-          response: i
-        } = t;
-        e(s, i, i && i.body);
-      }));
-    }
-
-    post(t, e = () => {}) {
-      if (t.body && t.headers && !t.headers["Content-Type"] && (t.headers["Content-Type"] = "application/x-www-form-urlencoded"), t.headers && delete t.headers["Content-Length"], this.isSurge() || this.isLoon()) {
-        this.isSurge() && this.isNeedRewrite && (t.headers = t.headers || {}, Object.assign(t.headers, {
-          "X-Surge-Skip-Scripting": !1
-        }));
-        $httpClient.post(t, (t, s, i) => {
-          !t && s && (s.body = i, s.statusCode = s.status);
-          e(t, s, i);
-        });
-      } else {
-        if (this.isQuanX()) {
-          t.method = "POST";
-          this.isNeedRewrite && (t.opts = t.opts || {}, Object.assign(t.opts, {
-            hints: !1
-          }));
-          $task.fetch(t).then(t => {
-            const {
-              statusCode: s,
-              statusCode: i,
-              headers: r,
-              body: o
-            } = t;
-            e(null, {
-              status: s,
-              statusCode: i,
-              headers: r,
-              body: o
-            }, o);
-          }, t => e(t));
-        } else {
-          if (this.isNode()) {
-            this.initGotEnv(t);
-            const {
-              url: s,
-              ...i
-            } = t;
-            this.got.post(s, i).then(t => {
-              const {
-                statusCode: s,
-                statusCode: i,
-                headers: r,
-                body: o
-              } = t;
-              e(null, {
-                status: s,
-                statusCode: i,
-                headers: r,
-                body: o
-              }, o);
-            }, t => {
-              const {
-                message: s,
-                response: i
-              } = t;
-              e(s, i, i && i.body);
-            });
-          }
-        }
-      }
-    }
-
-    time(t, e = null) {
-      const s = e ? new Date(e) : new Date();
-      let i = {
-        "M+": s.getMonth() + 1,
-        "d+": s.getDate(),
-        "H+": s.getHours(),
-        "m+": s.getMinutes(),
-        "s+": s.getSeconds(),
-        "q+": Math.floor((s.getMonth() + 3) / 3),
-        S: s.getMilliseconds()
-      };
-      /(y+)/.test(t) && (t = t.replace(RegExp.$1, (s.getFullYear() + "").substr(4 - RegExp.$1.length)));
-
-      for (let e in i) new RegExp("(" + e + ")").test(t) && (t = t.replace(RegExp.$1, 1 == RegExp.$1.length ? i[e] : ("00" + i[e]).substr(("" + i[e]).length)));
-
-      return t;
-    }
-
-    msg(e = t, s = "", i = "", r) {
-      const o = t => {
-        if (!t) {
-          return t;
-        }
-
-        if ("string" == typeof t) {
-          return this.isLoon() ? t : this.isQuanX() ? {
-            "open-url": t
-          } : this.isSurge() ? {
-            url: t
-          } : void 0;
-        }
-
-        if ("object" == typeof t) {
-          if (this.isLoon()) {
-            let e = t.openUrl || t.url || t["open-url"],
-                s = t.mediaUrl || t["media-url"];
-            return {
-              openUrl: e,
-              mediaUrl: s
-            };
-          }
-
-          if (this.isQuanX()) {
-            let e = t["open-url"] || t.url || t.openUrl,
-                s = t["media-url"] || t.mediaUrl;
-            return {
-              "open-url": e,
-              "media-url": s
-            };
-          }
-
-          if (this.isSurge()) {
-            let e = t.url || t.openUrl || t["open-url"];
-            return {
-              url: e
-            };
-          }
-        }
-      };
-
-      if (this.isMute || (this.isSurge() || this.isLoon() ? $notification.post(e, s, i, o(r)) : this.isQuanX() && $notify(e, s, i, o(r))), !this.isMuteLog) {
-        let t = ["", "==============📣系统通知📣=============="];
-        t.push(e);
-        s && t.push(s);
-        i && t.push(i);
-        console.log(t.join("\n"));
-        this.logs = this.logs.concat(t);
-      }
-    }
-
-    log(...t) {
-      t.length > 0 && (this.logs = [...this.logs, ...t]);
-      console.log(t.join(this.logSeparator));
-    }
-
-    logErr(t, e) {
-      const s = !this.isSurge() && !this.isQuanX() && !this.isLoon();
-      s ? this.log("", `❗️${this.name}, 错误!`, t.stack) : this.log("", `❗️${this.name}, 错误!`, t);
-    }
-
-    wait(t) {
-      return new Promise(e => setTimeout(e, t));
-    }
-
-    done(t = {}) {
-      const e = new Date().getTime(),
-            s = (e - this.startTime) / 1000;
-      this.log("", `🔔${this.name}, 结束! 🕛 ${s} 秒`);
-      this.log();
-      (this.isSurge() || this.isQuanX() || this.isLoon()) && $done(t);
-    }
-
-  }(t, e);
-}
+        max_retries = 9999
+        retries = 0
+        while retries < max_retries:
+            try:
+                r = requests.post(url, json=body, timeout=9)
+                return r.json()
+            except requests.exceptions.HTTPError as e:
+                print(f'❎请求签名服务器失败: {e}')
+            except requests.exceptions.Timeout:
+                print("❎签名接口请求超时")
+            except requests.exceptions.RequestException as e:
+                print(f'❎请求签名服务器错误: {e}')
+            retries += 1
+            print(f"❎重试次数: {retries}")
+            if retries >= max_retries:
+                print("❎重试次数上限,尝试使用备用通道1")
+                return None
+
+    def req(self, api, data, wua='False', v="1.0"):
+        try:
+            if type(data) == dict:
+                data = json.dumps(data)
+            wua = str(wua)
+            sign = self.xsign(api, data, wua, v)
+            url = f"{host}/gw/{api}/{v}/"
+            headers = {
+                "x-sgext": quote(sign.get('x-sgext')),
+                "x-sign": quote(sign.get('x-sign')),
+                'x-sid': self.sid,
+                'x-uid': self.uid,
+                'x-pv': '6.3',
+                'x-features': '1051',
+                'x-mini-wua': quote(sign.get('x-mini-wua')),
+                'content-type': 'application/x-www-form-urlencoded;charset=UTF-8',
+                'x-t': sign.get('x-t'),
+                'x-extdata': 'openappkey%3DDEFAULT_AUTH',
+                'x-ttid': '1551089129819@eleme_android_10.14.3',
+                'x-utdid': '',
+                'x-appkey': '24895413',
+                'x-devid': '',
+            }
+
+            params = {"data": data}
+            if 'wua' in sign:
+                params["wua"] = sign.get('wua')
+
+            max_retries = 5
+            retries = 0
+            while retries < max_retries:
+                try:
+                    res = requests.post(url, headers=headers, data=params, timeout=15)
+                    return res
+                except requests.exceptions.Timeout:
+                    print("❎接口请求超时")
+                except requests.exceptions.RequestException as e:
+                    print(f"❎请求异常: {e}")
+                retries += 1
+                print(f"❎重试次数: {retries}")
+                if retries >= max_retries:
+                    print("❎重试次数上限")
+                    return None
+        except Exception as e:
+            print(f'❎请求接口失败: {e}')
+            return None
+
+    def yqm(self):
+        api = 'mtop.ele.biz.growth.task.core.querytask'
+        data = json.dumps({"missionCollectionId": "839",
+                           "locationInfos": "[\"{\\\"lng\\\":\\\"105.75325090438128\\\",\\\"lat\\\":\\\"30.597472842782736\\\"}\"]",
+                           "bizScene": "game_center", "accountPlan": "HAVANA_COMMON"})
+        try:
+            res = self.req(api, data, 'False', "1.0")
+            if res.json()["ret"][0] == "SUCCESS::接口调用成功":
+                for y in res.json()['data']['mlist']:
+                    print(y['name'])
+                    if y['name'] == "邀请好友助力":
+                        actId = y['actionConfig']['ext']['actId']
+                        ShareId = y['actionConfig']['ext']['shareId']
+                        return actId, ShareId
+            else:
+                if res.json()["ret"][0] == "FAIL_SYS_SESSION_EXPIRED::Session过期":
+                    print("❎cookie已过期，请重新获取")
+                    return None, None
+                else:
+                    print(res.text)
+                    return None, None
+        except Exception:
+            print(f'❎请求错误')
+            return None, None
+
+    def share(self, actid1, shareId1):
+        api = 'mtop.koubei.interactioncenter.share.common.triggershare'
+        data = json.dumps(
+            {"actId": actid1, "shareId": shareId1, "bizScene": "DEFAULT", "requestId": "1719848804784"})
+        try:
+            res = self.req(api, data, 'False', "1.0")
+            if res is None:
+                return None
+            if res.json()["ret"][0] == "SUCCESS::调用成功":
+                print(f"[{self.name}] ✅助力成功")
+                return True
+            else:
+                if res.json()["ret"][0] == "FAIL_SYS_SESSION_EXPIRED::Session过期":
+                    print(f"[{self.name}] ❎cookie已过期，请重新获取")
+                    return False
+                else:
+                    if res.json()["data"]['errorMsg'] == "助力次数已用完":
+                        print(f"[{self.name}] ❎助力次数已用完")
+                        return False
+                    if res.json()["data"]['errorMsg'] == "今日助力次数已用完":
+                        print(f"[{self.name}] ❎哦豁，莫得次数咯")
+                        return False
+                    if res.json()["data"]['errorMsg'] == "人传人关系已达上限":
+                        print(f"[{self.name}] ❎助力上限\n")
+                        return 'SX'
+                    if res.json()["data"]['errorMsg'] == "分享者已被助力成功，客态重复助力":
+                        print(f"[{self.name}] ❎重复助力")
+                        return None
+                    else:
+                        print(f"[{self.name}] ❎助力失败")
+                        print(res.text)
+                        return None
+        except Exception:
+            print(f'请求错误')
+            return None
+
+    def prize(self):
+        api1 = 'mtop.ele.biz.growth.task.core.querytask'
+        data1 = json.dumps({"missionCollectionId": "839",
+                            "locationInfos": "[\"{\\\"lng\\\":\\\"105.75325090438128\\\",\\\"lat\\\":\\\"30.597472842782736\\\"}\"]",
+                            "bizScene": "game_center", "accountPlan": "HAVANA_COMMON"})
+        try:
+            res1 = self.req(api1, data1, 'False', "1.0")
+            if res1 is None:
+                return None
+            if res1.json()["ret"][0] == "SUCCESS::接口调用成功":
+                for y in res1.json()['data']['mlist']:
+                    if y['name'] == "邀请好友助力":
+                        for o in y['missionStageDTOS']:
+                            if o['rewardStatus'] == "TODO" and o['status'] == "FINISH":
+                                api = 'mtop.ele.biz.growth.task.core.receiveprize'
+                                data2 = json.dumps({
+                                    "missionCollectionId": "839",
+                                    "missionId": "20544001",
+                                    "count": o['stageCount']
+                                })
+                                try:
+                                    res = self.req(api, data2, 'False', "1.0")
+                                    if res is None:
+                                        continue
+                                    data = res.json()["data"]
+                                    if data.get('errorMsg') is not None:
+                                        print(f"[{self.name}] ❎领取奖励失败: {data['errorMsg']}")
+                                    else:
+                                        rlist = data.get('rlist')
+                                        if rlist is not None:
+                                            print(f"[{self.name}] ✅领取奖励成功--{rlist[0]['value']}乐园币")
+                                        else:
+                                            print(f"[{self.name}] ❎{res.json()['ret'][0]}")
+                                except Exception:
+                                    print(f'请求错误')
+                                    return None
+            else:
+                if res1.json()["ret"][0] == "FAIL_SYS_SESSION_EXPIRED::Session过期":
+                    print(f"[{self.name}] ❎cookie已过期，请重新获取")
+                else:
+                    print(f"[{self.name}] ❎获取列表失败:", res1.json()["data"]['errorMsg'])
+        except Exception:
+            print(f'请求错误')
+            return None
+
+def get_ck_usid(ck1):
+    try:
+        key_value_pairs = ck1.split(";")
+        for pair in key_value_pairs:
+            key, value = pair.split("=")
+            if key.lower() == "unb":
+                return value
+    except Exception:
+        return 'y'
+
+if __name__ == '__main__':
+    today = datetime.date.today()
+    today_str = today.strftime('%Y%m%d')
+    filename = f'{today_str}.json'
+    if not os.path.exists(filename):
+        with open(filename, 'w') as f:
+            json.dump({}, f)
+        print("今日助力json文件不存在，已创建")
+    else:
+        print("今日助力json文件已存在")
+
+    with open(filename, 'r') as file:
+        data = json.load(file)
+
+    if 'elmck' in os.environ:
+        cookie = os.environ.get('elmck')
+    else:
+        print("❎环境变量中不存在[elmck],启用本地变量模式")
+        cookie = ck
+
+    if cookie == "":
+        print("❎本地变量为空，请设置其中一个变量后再运行")
+        exit(-1)
+
+    cookies = cookie.split("&")
+    zlck_list = zlck.split("&")
+    print(f"获取到 {len(zlck_list)} 个被助力账号")
+
+    dzl_num = 0
+    for zlck in zlck_list:
+        dzl_num += 1
+        lyb = LYB(zlck)
+        # 检查当前账号的 USERID 是否在指定的列表中
+        if lyb.user_id not in specified_userids:
+            print(f"跳过账号 {lyb.user_id} (不在指定的 USERID 列表中)")
+            continue
+
+        actid, shareId = lyb.yqm()
+        print(f"actId: {actid}, shareId: {shareId}")  # 输出 actId 和 shareId
+        if actid is None or shareId is None:
+            print("❎获取助力id失败")
+        else:
+            print(f"======被助力账号{dzl_num}获取邀请码成功,开始助力======")
+            for i, ck in enumerate(cookies):
+                usid = get_ck_usid(ck)
+                zlcs = data.get(f"{usid}", 0)
+                if zlcs < 3:
+                    print(f"======被助力账号{dzl_num}-开始第{i + 1}/{len(cookies)}个账号助力======")
+                    a = LYB(ck).share(actid, shareId)
+                    if a == 'SX':
+                        break
+                    elif a:
+                        data[f"{usid}"] = zlcs + 1
+                        with open(filename, 'w') as file:
+                            json.dump(data, file, indent=4)
+                        print("2s后进行下一个账号")
+                        continue
+                    elif a is False:
+                        data[f"{usid}"] = 3
+                        with open(filename, 'w') as file:
+                            json.dump(data, file, indent=4)
+                        print("2s后进行下一个账号")
+                        continue
+                    else:
+                        print("2s后进行下一个账号")
+                        continue
+                else:
+                    continue
+
+        print(f"======被助力账号{dzl_num}-领取奖励======")
+        lyb.prize()
+        print(f"======被助力账号{dzl_num}-助力结束======\n\n")
