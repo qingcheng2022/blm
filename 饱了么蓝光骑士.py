@@ -1,6 +1,6 @@
 # 饿了么蓝光骑士 需要接口
 # -*- coding: utf-8 -*-
-# cron: 0 1,6,13,18,23 * * *
+cron: 0 1,6,13,18,23 * * *
 import hashlib
 import os
 import re
