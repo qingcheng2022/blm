@@ -1,5 +1,5 @@
 # 饿了么卡皮巴拉 需要接口才能运行
-
+# cron: 20 1,6,13,18,23 * * *
 import json
 import logging
 import os
