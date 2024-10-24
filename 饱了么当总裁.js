@@ -1,5 +1,4 @@
 /**
- * @kolikow
  * 变量：elmck: 必填，账号cookie
  * cron: 50 7,17,2,12,23 * * *
  */
