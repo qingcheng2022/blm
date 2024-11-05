@@ -55,7 +55,7 @@ class LYB:
 
         try:
             r = requests.post(
-                "sign接口",
+                "http://192.168.1.16:999/api/getXSign",
                 json=body
             )
             r.raise_for_status()
