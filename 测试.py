@@ -5,10 +5,7 @@ import time
 import requests
 from urllib.parse import quote
 from datetime import datetime, date
-response = requests.get("https://mkjt.jdmk.xyz/mkjt.txt")
-response.encoding = 'utf-8'
-txt = response.text
-print(txt)
+
 
 nczlck = os.environ.get('elmjsbck')
 
